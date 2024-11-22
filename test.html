@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chunked File Upload</title>
+</head>
+
+<body>
+    <h1>Upload File in 1MB Chunks</h1>
+    <form id="uploadForm">
+        <label for="fileInput">Select file:</label>
+        <input type="file" id="fileInput" name="file" required>
+        <br>
+        <label for="uuid">UUID:</label>
+        <input type="text" id="uuid" name="uuid" required>
+        <br>
+        <label for="check">Enable Verification:</label>
+        <input type="checkbox" id="check" name="check" value="0" checked>
+        <br>
+        <button type="submit">Upload</button>
+    </form>
+
+    <script>
+        function blobToUint8Array(blob) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+
+                // When the file is read, this event will trigger
+                reader.onloadend = function () {
+                    // The result is an ArrayBuffer, so we convert it to a Uint8Array
+                    if (reader.result) {
+                        resolve(new Uint8Array(reader.result));
+                    } else {
+                        reject("Error reading the Blob.");
+                    }
+                };
+
+                // Handle error event
+                reader.onerror = function () {
+                    reject("Error reading the Blob.");
+                };
+
+                // Read the blob as an ArrayBuffer
+                reader.readAsArrayBuffer(blob);
+            });
+        }
+
+        document.getElementById('uploadForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            const uuid = document.getElementById('uuid').value;
+            const check = document.getElementById('check').checked ? '1' : '0';
+            const totalSize = file.size;
+            const chunkSize = 1024 * 1024;  // 1MB per chunk
+            let offset = 0;
+
+            // Function to upload each chunk
+            async function uploadChunk(chunk, offset) {
+                const binaryData = await blobToUint8Array(chunk);
+                const formData = new FormData();
+                formData.append('S-File-MD5', "ffffffffffffffffffffffffffffffff");
+                formData.append('Check', check);
+                formData.append('Offset', offset);
+                formData.append('Uuid', uuid);
+                formData.append('TotalSize', totalSize);
+                formData.append('File', binaryData);
+
+                try {
+                    const response = await fetch('http://192.168.1.130:3030/uploadFile/upload', {
+                        method: 'POST',
+                        mode: "no-cors",
+                        body: formData
+                    });
+                    const result = await response.json();
+                    if (!result.success) {
+                        throw new Error(`Error: ${result.code}`);
+                    }
+                    console.log(`Chunk at offset ${offset} uploaded successfully.`);
+                } catch (error) {
+                    console.error(`Failed to upload chunk at offset ${offset}:`, error);
+                    throw error;
+                }
+            }
+
+            // Loop through the file and send chunks
+            while (offset < totalSize) {
+                const chunk = file.slice(offset, offset + chunkSize);
+                await uploadChunk(chunk, offset);
+                offset += chunkSize;
+            }
+
+            alert('File uploaded successfully in chunks!');
+        });
+    </script>
+</body>
+
+</html>
