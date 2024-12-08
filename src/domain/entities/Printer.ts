@@ -1,8 +1,7 @@
 export type Printer = {
     attributes: PrinterAttributes;
+    id: string; // 32-bit UUID
     mainboardID: string; // Motherboard ID
-    timeStamp: number; // Timestamp
-    topic: string; // Topic, used to distinguish the type of reported message
 };
 
 // Device Self-Check Status
@@ -42,4 +41,30 @@ export type PrinterAttributes = {
     tlpInterLayers: number; // Time-lapse photography shooting interval layers
 };
 
-export type Id = string;
+type PrintInfo = {
+    status: number; // Printing Sub-status
+    currentLayer: number; // Current Printing Layer
+    totalLayer: number; // Total Number of Print Layers
+    currentTicks: number; // Current Print Time (ms)
+    totalTicks: number; // Estimated Total Print Time(ms)
+    filename: string; // Print File Name
+    errorNumber: number; // Refer to the following text
+    taskId: string; // Current Task ID
+};
+
+export type PrinterStatus = {
+    currentStatus: number[]; // Current Machine Status
+    printScreen: number; // Total Exposure Screen Usage Time(s)
+    releaseFilm: number; // Total Release Film Usage Count
+    tempOfUVLED: number; // Current UVLED Temperature（℃）
+    timeLapseStatus: number; // Time-lapse Photography Switch Status. 0: Off, 1: On
+    printInfo: PrintInfo;
+};
+
+export type PrinterFile = {
+    name: string; // Indicates the current file or folder path.
+    usedSize: number; // Used Storage Space
+    totalSize: number; // Total Storage Space
+    storageType: number; // 0: Internal Storage, 1: External Storage
+    type: number; // 0: Folder 1: File
+};

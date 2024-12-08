@@ -1,5 +1,7 @@
 import { Codec, string, number, array, oneOf, exactly, GetType } from "purify-ts/Codec";
 
+// Topic: "sdcp/attributes/${MainboardID}"
+
 const DevicesStatusCodec = Codec.interface({
     TempSensorStatusOfUVLED: number, // UVLED Temperature Sensor Status, 0: Disconnected, 1: Normal, 2: Abnormal
     LCDStatus: number, // Exposure Screen Connection Status, 0: Disconnected, 1: Connected

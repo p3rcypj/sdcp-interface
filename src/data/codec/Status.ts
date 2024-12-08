@@ -1,4 +1,4 @@
-import { number, array, string, Codec } from "purify-ts";
+import { number, array, string, Codec, GetType } from "purify-ts";
 
 // Topic: "sdcp/status/${MainboardID}";
 
@@ -53,3 +53,5 @@ export const StatusCodec = Codec.interface({
     TimeStamp: number, // Timestamp
     Topic: string, // Topic, used to distinguish the type of reported message
 });
+
+export type StatusCodec = GetType<typeof StatusCodec>;
