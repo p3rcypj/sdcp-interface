@@ -1,7 +1,7 @@
 import React from "react";
-import { useAppContext } from "../app/context";
-import { Logger } from "../../domain/entities/generic/Logger";
-import { WebsocketConnection } from "../../domain/entities/WebsocketConnection";
+import { useAppContext } from "../../app/context";
+import { Logger } from "../../../domain/entities/generic/Logger";
+import { WebsocketConnection } from "../../../domain/entities/WebsocketConnection";
 
 const ipRegex = /^(?:\d{1,3}\.){3}\d{1,3}$/;
 

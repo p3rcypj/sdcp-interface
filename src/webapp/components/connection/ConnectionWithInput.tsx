@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, TextField, Button, useTheme, Typography, Divider } from "@mui/material";
 import { Wifi as WifiIcon, WifiOff as WifiOffIcon } from "@mui/icons-material";
-import { useAppContext } from "../app/context";
+import { useAppContext } from "../../app/context";
 import { useConnectionWithInput } from "./useConnectionWithInput";
-import { useConnectionStatus } from "../hooks/useConnectionStatus";
+import { useConnectionStatus } from "../../hooks/useConnectionStatus";
 
 export const ConnectionWithInput = () => {
     const theme = useTheme();

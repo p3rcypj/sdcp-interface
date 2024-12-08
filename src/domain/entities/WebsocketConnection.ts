@@ -90,7 +90,7 @@ export class WebsocketConnection extends EventTarget {
 
             setTimeout(() => {
                 this.close();
-            }, 10000);
+            }, 30000);
         };
 
         ws.onmessage = event => {

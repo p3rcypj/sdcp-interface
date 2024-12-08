@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import { AppContext, AppContextState } from "./context";
 import { darkgrey } from "../../utils/colors";
-import { ConnectionWithInput } from "../connection/ConnectionWithInput";
+import { ConnectionWithInput } from "../components/connection/ConnectionWithInput";
 import { useConnections } from "../hooks/useConnections";
 import { getCompositionRoot } from "../../CompositionRoot";
 
