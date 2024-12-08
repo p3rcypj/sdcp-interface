@@ -1,11 +1,18 @@
 import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
-import { AppContext, defaultAppContext } from "./context";
+import { AppContext, AppContextState } from "./context";
 import { darkgrey } from "../../utils/colors";
-import { Connection } from "../connection/Connection";
+import { ConnectionWithInput } from "../connection/ConnectionWithInput";
+import { useConnections } from "../hooks/useConnections";
+import { getCompositionRoot } from "../../CompositionRoot";
 
 export const App = React.memo(() => {
-    const [appContext, _setAppContext] = React.useState(defaultAppContext);
+    const connections = useConnections();
+
+    const appContext: AppContextState = {
+        compositionRoot: getCompositionRoot(),
+        connections: connections,
+    };
 
     return (
         <AppContext.Provider value={appContext}>
@@ -80,7 +87,7 @@ const Form = React.memo(() => {
     return (
         <form id="uploadForm">
             <Box display="flex" flexDirection="column" padding={theme.spacing(4)} rowGap={theme.spacing(2)}>
-                <Connection />
+                <ConnectionWithInput />
                 {/* <input type="file" ref={fileInput} name="file" required /> */}
                 {/* <input type="text" name="uuid" required value={uuid} />
                 <input type="checkbox" id="check" name="check" value="0" checked />

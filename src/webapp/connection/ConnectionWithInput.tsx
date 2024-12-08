@@ -1,45 +1,26 @@
 import React from "react";
 import { Box, TextField, Button, useTheme, Typography, Divider } from "@mui/material";
-import { useWebsocket } from "../hooks/useWebsocket";
 import { Wifi as WifiIcon, WifiOff as WifiOffIcon } from "@mui/icons-material";
+import { useAppContext } from "../app/context";
+import { useConnectionWithInput } from "./useConnectionWithInput";
+import { useConnectionStatus } from "../hooks/useConnectionStatus";
 
-const ipRegex = /^(?:\d{1,3}\.){3}\d{1,3}$/;
-
-const WEBSOCKET_PORT = 3030;
-
-export const Connection = () => {
+export const ConnectionWithInput = () => {
     const theme = useTheme();
 
-    const [host, setHost] = React.useState("");
+    const { connections } = useAppContext();
 
-    const validHost = React.useMemo(() => ipRegex.test(host), [host]);
+    const { host, updateHost, connect, close, isValid } = useConnectionWithInput({
+        onMessage: console.debug,
+        onError: console.error,
+    });
 
-    const ws = useWebsocket(
-        host,
-        WEBSOCKET_PORT,
-        (message: any) => {
-            console.log(message);
-        },
-        (error: any) => {
-            console.error(error);
-        }
-    );
-
-    const updateHost = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        setHost(event.target.value);
-    }, []);
-
-    const connect = React.useCallback(() => {
-        ws.open();
-    }, [ws]);
-
-    const close = React.useCallback(() => {
-        ws.close();
-    }, [ws]);
+    const ws = React.useMemo(() => connections.getByHost(host), [connections, host]);
+    const status = useConnectionStatus(ws?.getId() ?? "");
 
     const calculateElapsedTime = React.useCallback(
-        () => (ws?.startTime ? formatElapsedTime(Date.now() - ws.startTime) : "00:00:00"),
-        [ws.startTime]
+        () => (ws ? formatElapsedTime(ws.getElapsedTime()) : "00:00:00"),
+        [ws]
     );
 
     const [timeElapsed, setTimeElapsed] = React.useState<string>(calculateElapsedTime());
@@ -65,23 +46,24 @@ export const Connection = () => {
                     placeholder="0.0.0.0"
                     onChange={updateHost}
                     size="small"
+                    disabled={status === "connected"}
                 />
-                {ws.status === "disconnected" && (
+                {status === "disconnected" && (
                     <Button
                         variant="contained"
                         onClick={connect}
                         startIcon={<WifiIcon />}
-                        disabled={!validHost}
+                        disabled={!isValid}
                     >
                         Connect
                     </Button>
                 )}
-                {ws.status === "connected" && (
+                {status === "connected" && (
                     <Button variant="outlined" onClick={close} startIcon={<WifiOffIcon />}>
                         Close
                     </Button>
                 )}
-                {ws.status === "connected" && (
+                {status === "connected" && (
                     <Box display="flex" alignItems="center" marginLeft={theme.spacing(1)}>
                         <Typography variant="body1" color={theme.palette.text.disabled}>
                             {timeElapsed}
@@ -93,10 +75,11 @@ export const Connection = () => {
     );
 };
 
-const formatElapsedTime = (milliseconds: number) => {
+function formatElapsedTime(milliseconds: number) {
     const totalSeconds = Math.floor(milliseconds / 1000);
     const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
     const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
     const seconds = String(totalSeconds % 60).padStart(2, "0");
+
     return `${hours}:${minutes}:${seconds}`;
-};
+}
