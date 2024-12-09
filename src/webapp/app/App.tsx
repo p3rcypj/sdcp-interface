@@ -1,11 +1,12 @@
 import React from "react";
-import { Box, Divider, Typography, useTheme } from "@mui/material";
-import { AppContext, AppContextState } from "./context";
+import { Box, Button, Divider, Typography, useTheme } from "@mui/material";
+import { AppContext, AppContextState, useAppContext } from "./context";
 import { getCompositionRoot } from "../../CompositionRoot";
 import { ConnectionWithInput } from "../components/connection/ConnectionWithInput";
 import { useConnections } from "../hooks/useConnections";
 import { darkgrey } from "../../utils/colors";
 import { StatusView } from "../components/status/StatusView";
+import { Refresh as RefreshIcon } from "@mui/icons-material";
 
 export const App = React.memo(() => {
     const connections = useConnections();
@@ -26,7 +27,15 @@ export const App = React.memo(() => {
 });
 
 const Display = React.memo(() => {
+    const { connections, compositionRoot } = useAppContext();
+
     const theme = useTheme();
+
+    const currentWs = React.useMemo(() => connections.items[0], [connections.items]);
+
+    const refreshStatus = React.useCallback(async () => {
+        await compositionRoot.getStatus.execute(currentWs);
+    }, [compositionRoot.getStatus, currentWs]);
 
     return (
         <Box display="flex" flexDirection="column" padding={theme.spacing(4)} rowGap={theme.spacing(2)}>
@@ -37,13 +46,20 @@ const Display = React.memo(() => {
                 <Divider />
                 <ConnectionWithInput />
             </Box>
-            <Box>
-                <Typography variant="body2" color={theme.palette.text.disabled}>
-                    Status
-                </Typography>
-                <Divider />
-                <StatusView />
-            </Box>
+            {currentWs && (
+                <Box>
+                    <Typography variant="body2" color={theme.palette.text.disabled}>
+                        Status
+                    </Typography>
+                    <Divider />
+                    <Box marginTop={theme.spacing(2)}>
+                        <Button variant="contained" startIcon={<RefreshIcon />} onClick={refreshStatus}>
+                            Refresh status
+                        </Button>
+                    </Box>
+                    <StatusView ws={currentWs} />
+                </Box>
+            )}
         </Box>
     );
 });

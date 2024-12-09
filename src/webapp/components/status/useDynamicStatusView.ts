@@ -1,14 +1,10 @@
 import React from "react";
-import { useAppContext } from "../../app/context";
 import { PrinterStatus } from "../../../domain/entities/Printer";
 import { getPrinterStatus, StatusCodec } from "../../../data/codec/Status";
+import { WebsocketConnection } from "../../../domain/entities/WebsocketConnection";
 
-export function useStatusView() {
-    const { connections } = useAppContext();
-
+export function useDynamicStatusView(ws: WebsocketConnection) {
     const [status, setStatus] = React.useState<PrinterStatus>();
-
-    const ws = React.useMemo(() => connections.items[0], [connections]);
 
     React.useEffect(() => {
         if (ws) {

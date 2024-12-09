@@ -2,11 +2,11 @@ import { Codec, string, number, GetType, array, maybe } from "purify-ts/Codec";
 
 // Topic: "sdcp/response/${MainboardID}"
 
-const BasicDataCodec = Codec.interface({
+export const BasicAckCodec = Codec.interface({
     Ack: number, // 0 represents success, other details are provided in codes file.
 });
 
-const RetrieveFileListDataCodec = Codec.interface({
+export const RetrieveFileListCodec = Codec.interface({
     Ack: number, // 0 represents success
     FileList: array(
         Codec.interface({
@@ -19,17 +19,17 @@ const RetrieveFileListDataCodec = Codec.interface({
     ), // File list
 });
 
-const BatchDeleteFilesDataCodec = Codec.interface({
+export const BatchDeleteFilesCodec = Codec.interface({
     Ack: number, // 0 represents success
     ErrData: maybe(array(string)), // Files that failed to be deleted; if there are no failures, no return is necessary
 });
 
-const HistoricalTasksDataCodec = Codec.interface({
+export const HistoricalTasksCodec = Codec.interface({
     Ack: number,
     HistoryData: array(string), // An ordered list of historical records, where the array elements are the taskid (UUID) of the historical records.
 });
 
-const TaskDetailsDataCodec = Codec.interface({
+export const TaskDetailsCodec = Codec.interface({
     Ack: number, // 0 represents success
     HistoryDetailList: array(
         Codec.interface({
@@ -50,12 +50,12 @@ const TaskDetailsDataCodec = Codec.interface({
     ),
 });
 
-const ToggleVideoStreamDataCodec = Codec.interface({
+export const ToggleVideoStreamCodec = Codec.interface({
     Ack: number, // 0: Success 1: Exceeded maximum simultaneous streaming limit 2: Camera does not exist 3: Unknown error
     VideoUrl: string, //When opening the video stream, return the RTSP protocol address
 });
 
-export function getResponseData<Data>(dataCodec: Codec<Data>): Codec<SdcpWebsocketResponse<Data>> {
+export function getResponseCodec<Data>(dataCodec: Codec<Data>): Codec<SdcpRequestResponse<Data>> {
     return Codec.interface({
         Id: string, // Machine brand identifier, 32-bit UUID
         Data: Codec.interface({
@@ -69,21 +69,25 @@ export function getResponseData<Data>(dataCodec: Codec<Data>): Codec<SdcpWebsock
     });
 }
 
-export const BasicResponseCodec = getResponseData(BasicDataCodec);
-export const RetrieveFileListResponseCodec = getResponseData(RetrieveFileListDataCodec);
-export const BatchDeleteFilesResponseCodec = getResponseData(BatchDeleteFilesDataCodec);
-export const HistoricalTasksResponseCodec = getResponseData(HistoricalTasksDataCodec);
-export const TaskDetailsResponseCodec = getResponseData(TaskDetailsDataCodec);
-export const ToggleVideoStreamResponseCodec = getResponseData(ToggleVideoStreamDataCodec);
+export const BasicResponseCodec = getResponseCodec(BasicAckCodec);
+export const RetrieveFileListResponseCodec = getResponseCodec(RetrieveFileListCodec);
+export const BatchDeleteFilesResponseCodec = getResponseCodec(BatchDeleteFilesCodec);
+export const HistoricalTasksResponseCodec = getResponseCodec(HistoricalTasksCodec);
+export const TaskDetailsResponseCodec = getResponseCodec(TaskDetailsCodec);
+export const ToggleVideoStreamResponseCodec = getResponseCodec(ToggleVideoStreamCodec);
 
-export type BasicResponse = GetType<typeof BasicResponseCodec>;
+export type Ack = {
+    Ack: number;
+};
+
+export type BasicAckResponse = GetType<typeof BasicResponseCodec>;
 export type RetrieveFileListResponse = GetType<typeof RetrieveFileListResponseCodec>;
 export type BatchDeleteFilesResponse = GetType<typeof BatchDeleteFilesResponseCodec>;
 export type HistoricalTasksResponse = GetType<typeof HistoricalTasksResponseCodec>;
 export type TaskDetailsResponse = GetType<typeof TaskDetailsResponseCodec>;
 export type ToggleVideoStreamResponse = GetType<typeof ToggleVideoStreamResponseCodec>;
 
-export type SdcpWebsocketResponse<Ack> = {
+export type SdcpRequestResponse<Ack> = {
     Id: string;
     Data: { Cmd: number; Data: Ack; RequestID: string; MainboardID: string; TimeStamp: number };
     Topic: string;

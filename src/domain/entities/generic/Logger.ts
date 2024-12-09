@@ -1,5 +1,5 @@
-export type Logger = {
-    onMessage: (message: Message) => void;
+export type Logger<Data = any> = {
+    onMessage: (message: Message<Data>) => void;
     onError: (error: MessageError) => void;
 };
 
@@ -8,8 +8,8 @@ type MessageError = {
     data: any;
 };
 
-type Message = {
+type Message<Data> = {
     type: "info" | "success";
     message: string;
-    data: any;
+    data: Data;
 };

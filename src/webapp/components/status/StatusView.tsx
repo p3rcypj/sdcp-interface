@@ -18,12 +18,18 @@ import {
     SDCP_PRINT_STATUS_STOPPING,
 } from "../../../data/SdcpCodes";
 import { darkgrey } from "../../../utils/colors";
-import { useStatusView } from "./useStatusView";
+import { useDynamicStatusView } from "./useDynamicStatusView";
+import { WebsocketConnection } from "../../../domain/entities/WebsocketConnection";
+import { formatSeconds } from "../../../utils/utils";
 
-export const StatusView = React.memo(() => {
+export interface StatusViewProps {
+    ws: WebsocketConnection;
+}
+
+export const StatusView: React.FC<StatusViewProps> = React.memo(({ ws }) => {
     const theme = useTheme();
 
-    const { status } = useStatusView();
+    const { status } = useDynamicStatusView(ws);
 
     if (!status) return null;
 
@@ -32,19 +38,34 @@ export const StatusView = React.memo(() => {
             <Card sx={{ minWidth: 275 }}>
                 <CardContent>
                     <Typography variant="body2" fontWeight={600}>
-                        Status: {status.currentStatus.map(getPrinterStatus).join(", ")}
+                        Status:{" "}
+                        <Typography variant="body2" fontWeight={400} component="span">
+                            {status.currentStatus.map(getPrinterStatus).join(", ")}
+                        </Typography>
+                    </Typography>
+                    <Typography variant="body2" fontWeight={400}>
+                        Print screen:{" "}
+                        <Typography variant="body2" fontWeight={400} component="span">
+                            {formatSeconds(status.printScreen)}
+                        </Typography>
+                    </Typography>
+                    <Typography variant="body2" fontWeight={400}>
+                        Release film:{" "}
+                        <Typography variant="body2" fontWeight={400} component="span">
+                            {status.releaseFilm}
+                        </Typography>
                     </Typography>
                     <Typography variant="body2" fontWeight={600}>
-                        Print screen: {status.printScreen}
+                        UV LED Temp:{" "}
+                        <Typography variant="body2" fontWeight={400} component="span">
+                            {Math.floor(status.tempOfUVLED * 100) / 100} ºC
+                        </Typography>
                     </Typography>
                     <Typography variant="body2" fontWeight={600}>
-                        Release film: {status.releaseFilm}
-                    </Typography>
-                    <Typography variant="body2" fontWeight={600}>
-                        UV LED Temp: {status.tempOfUVLED}
-                    </Typography>
-                    <Typography variant="body2" fontWeight={600}>
-                        Timelapse: {status.timeLapseStatus ? "On" : "Off"}
+                        Timelapse:{" "}
+                        <Typography variant="body2" fontWeight={400} component="span">
+                            {status.timeLapseStatus ? "On" : "Off"}
+                        </Typography>
                     </Typography>
                     <Box
                         marginTop={theme.spacing(2)}
@@ -53,28 +74,52 @@ export const StatusView = React.memo(() => {
                         borderRadius={2}
                     >
                         <Typography variant="body2" fontWeight={600}>
-                            Print Status: {getPrintStatus(status.printInfo.status)}
+                            Print Status:{" "}
+                            <Typography variant="body2" fontWeight={400} component="span">
+                                {getPrintStatus(status.printInfo.status)}
+                            </Typography>
                         </Typography>
                         <Typography variant="body2" fontWeight={600}>
-                            Current Layer: {status.printInfo.currentLayer}
+                            Current Layer:{" "}
+                            <Typography variant="body2" fontWeight={400} component="span">
+                                {status.printInfo.currentLayer}
+                            </Typography>
                         </Typography>
                         <Typography variant="body2" fontWeight={600}>
-                            Total Layers: {status.printInfo.totalLayer}
+                            Total Layers:{" "}
+                            <Typography variant="body2" fontWeight={400} component="span">
+                                {status.printInfo.totalLayer}
+                            </Typography>
                         </Typography>
                         <Typography variant="body2" fontWeight={600}>
-                            Current Ticks: {status.printInfo.currentTicks}
+                            Current Ticks:{" "}
+                            <Typography variant="body2" fontWeight={400} component="span">
+                                {status.printInfo.currentTicks}
+                            </Typography>
                         </Typography>
                         <Typography variant="body2" fontWeight={600}>
-                            Total Ticks: {status.printInfo.totalTicks}
+                            Total Ticks:{" "}
+                            <Typography variant="body2" fontWeight={400} component="span">
+                                {status.printInfo.totalTicks}
+                            </Typography>
                         </Typography>
                         <Typography variant="body2" fontWeight={600}>
-                            Filename: {status.printInfo.filename}
+                            Filename:{" "}
+                            <Typography variant="body2" fontWeight={400} component="span">
+                                {status.printInfo.filename}
+                            </Typography>
                         </Typography>
                         <Typography variant="body2" fontWeight={600}>
-                            Error Number: {status.printInfo.errorNumber}
+                            Error Number:{" "}
+                            <Typography variant="body2" fontWeight={400} component="span">
+                                {status.printInfo.errorNumber}
+                            </Typography>
                         </Typography>
                         <Typography variant="body2" fontWeight={600}>
-                            Task ID: {status.printInfo.taskId}
+                            Task ID:{" "}
+                            <Typography variant="body2" fontWeight={400} component="span">
+                                {status.printInfo.taskId}
+                            </Typography>
                         </Typography>
                     </Box>
                 </CardContent>

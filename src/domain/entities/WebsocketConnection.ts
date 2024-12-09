@@ -16,13 +16,14 @@ export class WebsocketConnection extends EventTarget {
     private id: string;
     private startTime: Maybe<number> = undefined;
 
-    constructor(host: string, port: number, logger?: Logger) {
+    constructor(host: string, port: number, defaultLogger?: Logger) {
         super();
         this.host = host;
         this.port = port;
-        this.logger = logger;
+        this.logger = defaultLogger;
         this.id = Date.now().toString();
         this.ws = this.connect();
+        if (this.logger) this.addLogger(this.logger);
     }
 
     connect(): WebSocket {
@@ -36,7 +37,7 @@ export class WebsocketConnection extends EventTarget {
             return this.ws;
         } else {
             const ws = new WebSocket(`ws://${this.host}:${this.port}/websocket`);
-            this.attachListeners(ws);
+            this.setupConnectionEvents(ws);
 
             return ws;
         }
@@ -101,67 +102,6 @@ export class WebsocketConnection extends EventTarget {
         };
 
         const onClose = (event: CloseEvent) => {
-            logger.onMessage({
-                type: "info",
-                message: "Connection closed",
-                data: event,
-            });
-        };
-
-        this.ws.addEventListener("open", onOpen);
-        this.ws.addEventListener("message", onMessage);
-        this.ws.addEventListener("error", onError);
-        this.ws.addEventListener("close", onClose);
-
-        const removeListeners = () => {
-            this.ws.removeEventListener("open", onOpen);
-            this.ws.removeEventListener("message", onMessage);
-            this.ws.removeEventListener("error", onError);
-            this.ws.removeEventListener("close", onClose);
-        };
-
-        return {
-            removeListeners,
-        };
-    }
-
-    private attachListeners(ws: WebSocket) {
-        ws.onopen = () => {
-            this.status = "connected";
-            this.dispatchEvent(new Event("statusChange"));
-            this.startTime = Date.now();
-
-            this.logger?.onMessage({
-                type: "success",
-                message: "Connection established",
-                data: undefined,
-            });
-
-            setTimeout(() => {
-                this.close();
-            }, 30000);
-        };
-
-        ws.onmessage = event => {
-            this.logger?.onMessage({
-                type: "info",
-                message: "Received message",
-                data: JSON.parse(event.data),
-            });
-        };
-
-        ws.onerror = error => {
-            this.logger?.onError({
-                reason: "Websocket error",
-                data: error,
-            });
-        };
-
-        ws.onclose = event => {
-            this.status = "disconnected";
-            this.dispatchEvent(new Event("statusChange"));
-            this.startTime = undefined;
-
             switch (event.code) {
                 case WebsocketConnection.NORMAL_CLOSURE:
                     this.logger?.onMessage({
@@ -195,6 +135,39 @@ export class WebsocketConnection extends EventTarget {
                         data: event,
                     });
             }
+        };
+
+        this.ws.addEventListener("open", onOpen);
+        this.ws.addEventListener("message", onMessage);
+        this.ws.addEventListener("error", onError);
+        this.ws.addEventListener("close", onClose);
+
+        const removeListeners = () => {
+            this.ws.removeEventListener("open", onOpen);
+            this.ws.removeEventListener("message", onMessage);
+            this.ws.removeEventListener("error", onError);
+            this.ws.removeEventListener("close", onClose);
+        };
+
+        return {
+            removeListeners,
+        };
+    }
+
+    private setupConnectionEvents(ws: WebSocket) {
+        ws.onopen = () => {
+            this.status = "connected";
+            this.dispatchEvent(new Event("statusChange"));
+            this.startTime = Date.now();
+            setTimeout(() => {
+                this.close();
+            }, 30000);
+        };
+
+        ws.onclose = () => {
+            this.status = "disconnected";
+            this.dispatchEvent(new Event("statusChange"));
+            this.startTime = undefined;
         };
     }
 }

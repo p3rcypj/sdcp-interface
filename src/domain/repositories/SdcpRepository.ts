@@ -1,6 +1,7 @@
 import { Maybe } from "../../utils/ts-utils";
 import { PrinterAttributes, PrinterFile, PrinterStatus } from "../entities/Printer";
 import { Task } from "../entities/Task";
+import { WebsocketConnection } from "../entities/WebsocketConnection";
 
 // TODO: instead of simply making requests, develop responses to align needs of the application
 export interface SdcpRepository {
@@ -31,6 +32,7 @@ export interface SdcpRepository {
 export type SdcpBasicArgs = {
     id: string; // 32-bit UUID
     mainboardId: string;
+    ws: WebsocketConnection;
 };
 
 export type TerminateFileTransferArgs = SdcpBasicArgs & {
