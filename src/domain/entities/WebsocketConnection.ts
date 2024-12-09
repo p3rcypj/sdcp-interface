@@ -76,6 +76,55 @@ export class WebsocketConnection extends EventTarget {
         this.ws.send(JSON.stringify(pingMessage));
     }
 
+    addLogger(logger: Logger) {
+        const onOpen = () => {
+            logger.onMessage({
+                type: "success",
+                message: "Connection established",
+                data: undefined,
+            });
+        };
+
+        const onMessage = (event: MessageEvent) => {
+            logger.onMessage({
+                type: "info",
+                message: "Received message",
+                data: JSON.parse(event.data),
+            });
+        };
+
+        const onError = (error: Event) => {
+            logger.onError({
+                reason: "Websocket error",
+                data: error,
+            });
+        };
+
+        const onClose = (event: CloseEvent) => {
+            logger.onMessage({
+                type: "info",
+                message: "Connection closed",
+                data: event,
+            });
+        };
+
+        this.ws.addEventListener("open", onOpen);
+        this.ws.addEventListener("message", onMessage);
+        this.ws.addEventListener("error", onError);
+        this.ws.addEventListener("close", onClose);
+
+        const removeListeners = () => {
+            this.ws.removeEventListener("open", onOpen);
+            this.ws.removeEventListener("message", onMessage);
+            this.ws.removeEventListener("error", onError);
+            this.ws.removeEventListener("close", onClose);
+        };
+
+        return {
+            removeListeners,
+        };
+    }
+
     private attachListeners(ws: WebSocket) {
         ws.onopen = () => {
             this.status = "connected";

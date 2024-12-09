@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, TextField, Button, useTheme, Typography, Divider } from "@mui/material";
+import { Box, TextField, Button, useTheme, Typography } from "@mui/material";
 import { Wifi as WifiIcon, WifiOff as WifiOffIcon } from "@mui/icons-material";
 import { useAppContext } from "../../app/context";
 import { useConnectionWithInput } from "./useConnectionWithInput";
@@ -34,43 +34,32 @@ export const ConnectionWithInput = () => {
     });
 
     return (
-        <Box>
-            <Typography variant="body2" color={theme.palette.text.disabled}>
-                WebSocket connection
-            </Typography>
-            <Divider />
-            <Box display="flex" columnGap={theme.spacing(1)} marginTop={theme.spacing(2)}>
-                <TextField
-                    label="Printer IP"
-                    value={host}
-                    placeholder="0.0.0.0"
-                    onChange={updateHost}
-                    size="small"
-                    disabled={status === "connected"}
-                />
-                {status === "disconnected" && (
-                    <Button
-                        variant="contained"
-                        onClick={connect}
-                        startIcon={<WifiIcon />}
-                        disabled={!isValid}
-                    >
-                        Connect
-                    </Button>
-                )}
-                {status === "connected" && (
-                    <Button variant="outlined" onClick={close} startIcon={<WifiOffIcon />}>
-                        Close
-                    </Button>
-                )}
-                {status === "connected" && (
-                    <Box display="flex" alignItems="center" marginLeft={theme.spacing(1)}>
-                        <Typography variant="body1" color={theme.palette.text.disabled}>
-                            {timeElapsed}
-                        </Typography>
-                    </Box>
-                )}
-            </Box>
+        <Box display="flex" columnGap={theme.spacing(1)} marginTop={theme.spacing(2)}>
+            <TextField
+                label="Printer IP"
+                value={host}
+                placeholder="0.0.0.0"
+                onChange={updateHost}
+                size="small"
+                disabled={status === "connected"}
+            />
+            {status === "disconnected" && (
+                <Button variant="contained" onClick={connect} startIcon={<WifiIcon />} disabled={!isValid}>
+                    Connect
+                </Button>
+            )}
+            {status === "connected" && (
+                <Button variant="outlined" onClick={close} startIcon={<WifiOffIcon />}>
+                    Close
+                </Button>
+            )}
+            {status === "connected" && (
+                <Box display="flex" alignItems="center" marginLeft={theme.spacing(1)}>
+                    <Typography variant="body1" color={theme.palette.text.disabled}>
+                        {timeElapsed}
+                    </Typography>
+                </Box>
+            )}
         </Box>
     );
 };
