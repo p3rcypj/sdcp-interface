@@ -81,7 +81,6 @@ export default function MainGrid() {
                     </Stack>
                 </Grid>
             </Grid>
-            <Copyright sx={{ my: 4 }} />
         </Box>
     );
 }

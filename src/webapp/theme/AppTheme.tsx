@@ -6,8 +6,11 @@ import { dataDisplayCustomizations } from "./customizations/dataDisplay";
 import { feedbackCustomizations } from "./customizations/feedback";
 import { navigationCustomizations } from "./customizations/navigation";
 import { surfacesCustomizations } from "./customizations/surfaces";
-export { customizations } from "./customizations";
 import { colorSchemes, typography, shadows, shape } from "./themePrimitives";
+import { chartsCustomizations } from "./customizations/charts";
+import { dataGridCustomizations } from "./customizations/dataGrid";
+import { datePickersCustomizations } from "./customizations/datePickers";
+import { treeViewCustomizations } from "./customizations/treeView";
 
 interface AppThemeProps {
     children: React.ReactNode;
@@ -40,7 +43,10 @@ export default function AppTheme(props: AppThemeProps) {
                       ...navigationCustomizations,
                       ...surfacesCustomizations,
                       ...themeComponents,
-                      ...customizations,
+                      ...chartsCustomizations,
+                      ...dataGridCustomizations,
+                      ...datePickersCustomizations,
+                      ...treeViewCustomizations,
                   },
               });
     }, [disableCustomTheme, themeComponents]);
