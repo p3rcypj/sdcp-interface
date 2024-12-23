@@ -1,9 +1,12 @@
 import React from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import { alpha, Box, Stack, Typography, useTheme } from "@mui/material";
 import { AppContext, AppContextState } from "./context";
-import { darkgrey } from "../../utils/colors";
 import { useConnections } from "../hooks/useConnections";
 import { getCompositionRoot } from "../../CompositionRoot";
+import SideMenu from "../template/SideMenu";
+import AppNavbar from "../template/AppNavbar";
+import Header from "../template/Header";
+import MainGrid from "../template/MainGrid";
 
 export const App = React.memo(() => {
     const connections = useConnections();
@@ -15,8 +18,32 @@ export const App = React.memo(() => {
 
     return (
         <AppContext.Provider value={appContext}>
-            <Box display="flex" height="100vh" bgcolor={darkgrey[600]}></Box>
-            <Watermark />
+            <Box display="flex">
+                <SideMenu />
+                <AppNavbar />
+                {/* Main content */}
+                <Box
+                    component="main"
+                    sx={theme => ({
+                        flexGrow: 1,
+                        backgroundColor: alpha(theme.palette.background.default, 1),
+                        overflow: "auto",
+                    })}
+                >
+                    <Stack
+                        spacing={2}
+                        sx={{
+                            alignItems: "center",
+                            mx: 3,
+                            pb: 5,
+                            mt: { xs: 8, md: 0 },
+                        }}
+                    >
+                        <Header />
+                        <MainGrid />
+                    </Stack>
+                </Box>
+            </Box>
         </AppContext.Provider>
     );
 });
