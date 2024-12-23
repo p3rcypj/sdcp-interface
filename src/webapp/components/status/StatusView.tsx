@@ -20,7 +20,7 @@ import {
 import { darkgrey } from "../../../utils/colors";
 import { useDynamicStatusView } from "./useDynamicStatusView";
 import { WebsocketConnection } from "../../../domain/entities/WebsocketConnection";
-import { formatSeconds } from "../../../utils/utils";
+import { formatMilliseconds, formatSeconds } from "../../../utils/utils";
 
 export interface StatusViewProps {
     ws: WebsocketConnection;
@@ -94,13 +94,13 @@ export const StatusView: React.FC<StatusViewProps> = React.memo(({ ws }) => {
                         <Typography variant="body2" fontWeight={600}>
                             Current Ticks:{" "}
                             <Typography variant="body2" fontWeight={400} component="span">
-                                {status.printInfo.currentTicks}
+                                {formatMilliseconds(status.printInfo.currentTicks)}
                             </Typography>
                         </Typography>
                         <Typography variant="body2" fontWeight={600}>
                             Total Ticks:{" "}
                             <Typography variant="body2" fontWeight={400} component="span">
-                                {status.printInfo.totalTicks}
+                                {formatMilliseconds(status.printInfo.totalTicks)}
                             </Typography>
                         </Typography>
                         <Typography variant="body2" fontWeight={600}>
