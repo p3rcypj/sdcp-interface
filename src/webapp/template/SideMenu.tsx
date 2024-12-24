@@ -1,14 +1,11 @@
-import React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled, useColorScheme, useTheme } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import MuiDrawer, { drawerClasses } from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-// import SelectContent from "./SelectContent";
 import { MenuContent } from "./MenuContent";
-// import CardAlert from "./CardAlert";
 import OptionsMenu from "./OptionsMenu";
 
 const drawerWidth = 240;
@@ -75,15 +72,21 @@ export default function SideMenu() {
     );
 }
 
-const AppIcon = () => (
-    <span
-        role="presentation"
-        style={{
-            backgroundImage: "url(icon_256.png)",
-            height: 24,
-            width: 24,
-            filter: "invert(1)",
-            backgroundSize: "contain",
-        }}
-    ></span>
-);
+export const AppIcon = () => {
+    const { mode, systemMode } = useColorScheme();
+
+    const invert = mode === "dark" || (mode === "system" && systemMode === "dark") ? "invert(1)" : "none";
+
+    return (
+        <span
+            role="presentation"
+            style={{
+                backgroundImage: "url(icon_256.png)",
+                height: 24,
+                width: 24,
+                filter: invert,
+                backgroundSize: "contain",
+            }}
+        ></span>
+    );
+};

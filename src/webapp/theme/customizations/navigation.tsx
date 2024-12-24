@@ -13,8 +13,9 @@ export const navigationCustomizations: Components<Theme> = {
     MuiMenuItem: {
         styleOverrides: {
             root: ({ theme }) => ({
-                borderRadius: (theme.vars || theme).shape.borderRadius,
+                borderRadius: 4,
                 padding: "6px 8px",
+                minHeight: 24,
                 [`&.${menuItemClasses.focusVisible}`]: {
                     backgroundColor: "transparent",
                 },
@@ -32,6 +33,9 @@ export const navigationCustomizations: Components<Theme> = {
                 gap: "0px",
                 [`&.${dividerClasses.root}`]: {
                     margin: "0 -8px",
+                },
+                [`&&`]: {
+                    padding: 8,
                 },
             },
             paper: ({ theme }) => ({

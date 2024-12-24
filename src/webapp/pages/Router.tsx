@@ -23,7 +23,7 @@ const TemplateDashboard = () => {
             bgcolor={alpha(theme.palette.background.default, 1)}
             overflow="auto"
         >
-            <Stack alignItems="center" marginX={3} paddingBottom={5} marginTop={{ xs: 8, md: 0 }} gap={2}>
+            <Stack alignItems="center" marginX={3} paddingBottom={5} marginTop={{ xs: 10, md: 0 }} gap={2}>
                 <Header />
                 <MainGrid />
             </Stack>
