@@ -11,16 +11,14 @@ import SpaceDashboardRoundedIcon from "@mui/icons-material/SpaceDashboardRounded
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import LocalPrintshopRoundedIcon from "@mui/icons-material/LocalPrintshopRounded";
 import InsightsRoundedIcon from "@mui/icons-material/InsightsRounded";
-import WarehouseRoundedIcon from "@mui/icons-material/WarehouseRounded";
 import CloudRoundedIcon from "@mui/icons-material/CloudRounded";
 import StoreRoundedIcon from "@mui/icons-material/StoreRounded";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
-import StorageRoundedIcon from "@mui/icons-material/StorageRounded";
 import FolderRoundedIcon from "@mui/icons-material/FolderRounded";
 import CollectionsBookmarkRoundedIcon from "@mui/icons-material/CollectionsBookmarkRounded";
 import QueueRoundedIcon from "@mui/icons-material/QueueRounded";
-import ConstructionIcon from "@mui/icons-material/Construction";
-import CategoryIcon from "@mui/icons-material/Category";
+import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
+import CategoryRoundedIcon from "@mui/icons-material/CategoryRounded";
 import { Stack } from "../components/stack/Stack";
 import { Raspberry } from "../components/icons/Raspberry";
 
@@ -34,7 +32,7 @@ const manageItems = [
     { text: "Printers", icon: <LocalPrintshopRoundedIcon />, value: "printers" },
     { text: "Bulk queue", icon: <QueueRoundedIcon />, value: "bulk-queue" },
     { text: "Library", icon: <CollectionsBookmarkRoundedIcon />, value: "library" },
-    { text: "Inventory", icon: <CategoryIcon />, value: "inventory" },
+    { text: "Inventory", icon: <CategoryRoundedIcon />, value: "inventory" },
     { text: "Store", icon: <StoreRoundedIcon />, value: "store" },
     {
         text: "Raspberry Pis",
@@ -55,8 +53,8 @@ const storageItems = [
 const adminItems = [
     { text: "Analytics", icon: <InsightsRoundedIcon />, value: "analytics" },
     { text: "Logs", icon: <ReceiptLongRoundedIcon />, value: "logs" },
-    { text: "Maintenance", icon: <ConstructionIcon />, value: "maintenance" }, // TODO: add backups and schedules
-    { text: "Settings", icon: <SettingsRoundedIcon />, value: "settings" }, // TODO: add integrations like zapier, webhooks, ifttt, or api
+    { text: "Maintenance", icon: <ConstructionRoundedIcon />, value: "maintenance" }, // TODO: add backups and schedules
+    { text: "Settings", icon: <SettingsRoundedIcon />, value: "settings" }, // TODO: add integrations like zapier, webhooks, ifttt, or api, and also network settings to be added like how the network mesh is
     // { text: "Report bug", icon: <PestControlIcon />, value: "report-bug" },
     // { text: "Give feedback", icon: <HelpRoundedIcon />, value: "give-feedback" },
 ];
