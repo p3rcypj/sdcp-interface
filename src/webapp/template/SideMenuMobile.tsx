@@ -9,7 +9,7 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 
 import MenuButton from "./MenuButton";
-import MenuContent from "./MenuContent";
+import { MenuContent } from "./MenuContent";
 import CardAlert from "./CardAlert";
 
 interface SideMenuMobileProps {
@@ -55,7 +55,7 @@ export default function SideMenuMobile({ open, toggleDrawer }: SideMenuMobilePro
                 </Stack>
                 <Divider />
                 <Stack sx={{ flexGrow: 1 }}>
-                    <MenuContent />
+                    <MenuContent selected="home" />
                     <Divider />
                 </Stack>
                 <CardAlert />

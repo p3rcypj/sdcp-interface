@@ -5,7 +5,6 @@ import { App } from "./webapp/app/App.tsx";
 import AppTheme from "./webapp/theme/AppTheme.tsx";
 
 // MUI v6 Dashboard Template
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <StyledEngineProvider injectFirst>
