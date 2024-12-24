@@ -340,6 +340,12 @@ export const colorSchemes = {
     },
 };
 
+declare module "@mui/material/Typography" {
+    interface TypographyPropsVariantOverrides {
+        overline2: true;
+    }
+}
+
 export const typography = {
     fontFamily: "Inter, sans-serif",
     h1: {
@@ -387,6 +393,12 @@ export const typography = {
     caption: {
         fontSize: defaultTheme.typography.pxToRem(12),
         fontWeight: 400,
+    },
+    overline2: {
+        fontSize: defaultTheme.typography.pxToRem(10),
+        fontWeight: 400,
+        textTransform: "uppercase",
+        letterSpacing: "1.5px",
     },
 };
 

@@ -1,10 +1,11 @@
 import React from "react";
-import { alpha, Box, Stack, Typography, useTheme } from "@mui/material";
+import { alpha, Box, useTheme } from "@mui/material";
 import { AppContext, AppContextState } from "./context";
 import { useConnections } from "../hooks/useConnections";
 import { getCompositionRoot } from "../../CompositionRoot";
+import { Stack } from "../components/stack/Stack";
 import SideMenu from "../template/SideMenu";
-import AppNavbar from "../template/AppNavbar";
+import _AppNavbar from "../template/AppNavbar";
 import Header from "../template/Header";
 import MainGrid from "../template/MainGrid";
 
@@ -20,41 +21,24 @@ export const App = React.memo(() => {
         <AppContext.Provider value={appContext}>
             <Box display="flex">
                 <SideMenu />
-                <AppNavbar />
-                {/* Main content */}
-                <Box
-                    component="main"
-                    sx={theme => ({
-                        flexGrow: 1,
-                        backgroundColor: alpha(theme.palette.background.default, 1),
-                        overflow: "auto",
-                    })}
-                >
-                    <Stack
-                        spacing={2}
-                        sx={{
-                            alignItems: "center",
-                            mx: 3,
-                            pb: 5,
-                            mt: { xs: 8, md: 0 },
-                        }}
-                    >
-                        <Header />
-                        <MainGrid />
-                    </Stack>
-                </Box>
+                {/* Mobile: <AppNavbar /> */}
+                {
+                    /* Main content */
+                    // <TemplateDashboard />
+                }
             </Box>
         </AppContext.Provider>
     );
 });
 
-const Watermark: React.FC = () => {
+const _TemplateDashboard = () => {
     const theme = useTheme();
     return (
-        <Box position="fixed" left={theme.spacing(2)} bottom={theme.spacing(1)}>
-            <Typography variant="h6" color="textDisabled">
-                SDCP Interface
-            </Typography>
+        <Box component="main" flexGrow={1} bgcolor={alpha(theme.palette.background.default, 1)}>
+            <Stack alignItems="center" marginX={3} paddingBottom={5} marginTop={{ xs: 8, md: 0 }} gap={2}>
+                <Header />
+                <MainGrid />
+            </Stack>
         </Box>
     );
 };

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Theme as SystemTheme } from "@mui/system/createTheme";
 import type { ThemeOptions } from "@mui/material/styles";
 import { inputsCustomizations } from "./customizations/inputs";
 import { dataDisplayCustomizations } from "./customizations/dataDisplay";
@@ -11,6 +12,12 @@ import { chartsCustomizations } from "./customizations/charts";
 import { dataGridCustomizations } from "./customizations/dataGrid";
 import { datePickersCustomizations } from "./customizations/datePickers";
 import { treeViewCustomizations } from "./customizations/treeView";
+
+declare module "@mui/material/styles" {
+    interface Theme {
+        vars?: Partial<SystemTheme>;
+    }
+}
 
 interface AppThemeProps {
     children: React.ReactNode;

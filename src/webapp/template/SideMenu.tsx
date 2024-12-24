@@ -1,14 +1,14 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
+import React from "react";
+import { styled, useTheme } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import MuiDrawer, { drawerClasses } from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import SelectContent from "./SelectContent";
-import MenuContent from "./MenuContent";
-import CardAlert from "./CardAlert";
+// import SelectContent from "./SelectContent";
+import { MenuContent } from "./MenuContent";
+// import CardAlert from "./CardAlert";
 import OptionsMenu from "./OptionsMenu";
 
 const drawerWidth = 240;
@@ -25,6 +25,8 @@ const Drawer = styled(MuiDrawer)({
 });
 
 export default function SideMenu() {
+    const theme = useTheme();
+
     return (
         <Drawer
             variant="permanent"
@@ -35,18 +37,14 @@ export default function SideMenu() {
                 },
             }}
         >
-            <Box
-                sx={{
-                    display: "flex",
-                    mt: "calc(var(--template-frame-height, 0px) + 4px)",
-                    p: 1.5,
-                }}
-            >
-                <SelectContent />
+            <Box display="flex" padding={theme.spacing(2)}>
+                <Box display="flex" alignItems="center" columnGap={theme.spacing(1)}>
+                    <AppIcon />
+                    <Typography variant="subtitle2">SDCP Interface</Typography>
+                </Box>
             </Box>
             <Divider />
-            <MenuContent />
-            <CardAlert />
+            <MenuContent selected="home" />
             <Stack
                 direction="row"
                 sx={{
@@ -76,3 +74,16 @@ export default function SideMenu() {
         </Drawer>
     );
 }
+
+const AppIcon = () => (
+    <span
+        role="presentation"
+        style={{
+            backgroundImage: "url(icon_256.png)",
+            height: 24,
+            width: 24,
+            filter: "invert(1)",
+            backgroundSize: "contain",
+        }}
+    ></span>
+);
