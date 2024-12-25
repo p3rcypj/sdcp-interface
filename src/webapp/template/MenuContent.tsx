@@ -27,17 +27,17 @@ import { Raspberry } from "../components/icons/Raspberry";
 import { useLocation } from "react-router-dom";
 
 const navigationItems = [
-    { text: "Home", icon: <HomeRoundedIcon />, value: "home" },
-    { text: "Dashboard", icon: <SpaceDashboardRoundedIcon />, value: "dashboard" },
-    { text: "Streaming", icon: <VideocamRoundedIcon />, value: "streaming" },
+    { text: "Home", icon: <HomeRoundedIcon />, value: "" },
+    { text: "Dashboard", icon: <SpaceDashboardRoundedIcon />, value: "dashboard", disabled: true },
+    { text: "Streaming", icon: <VideocamRoundedIcon />, value: "streaming", disabled: true },
 ];
 
 const manageItems = [
     { text: "Printers", icon: <LocalPrintshopRoundedIcon />, value: "printers" },
-    { text: "Bulk queue", icon: <QueueRoundedIcon />, value: "bulk-queue" },
-    { text: "Library", icon: <CollectionsBookmarkRoundedIcon />, value: "library" },
-    { text: "Inventory", icon: <CategoryRoundedIcon />, value: "inventory" },
-    { text: "Store", icon: <StoreRoundedIcon />, value: "store" },
+    { text: "Bulk queue", icon: <QueueRoundedIcon />, value: "bulk-queue", disabled: true },
+    { text: "Library", icon: <CollectionsBookmarkRoundedIcon />, value: "library", disabled: true },
+    { text: "Inventory", icon: <CategoryRoundedIcon />, value: "inventory", disabled: true },
+    { text: "Store", icon: <StoreRoundedIcon />, value: "store", disabled: true },
     {
         text: "Raspberry Pis",
         icon: (
@@ -46,18 +46,19 @@ const manageItems = [
             </SvgIcon>
         ),
         value: "raspberry-pis",
+        disabled: true,
     },
 ];
 
 const storageItems = [
     { text: "Local", icon: <FolderRoundedIcon />, value: "local" },
-    { text: "Cloud", icon: <CloudRoundedIcon />, value: "cloud" },
+    { text: "Cloud", icon: <CloudRoundedIcon />, value: "cloud", disabled: true },
 ];
 
 const adminItems = [
-    { text: "Analytics", icon: <InsightsRoundedIcon />, value: "analytics" },
-    { text: "Logs", icon: <ReceiptLongRoundedIcon />, value: "logs" },
-    { text: "Maintenance", icon: <ConstructionRoundedIcon />, value: "maintenance" }, // TODO: add backups and schedules
+    { text: "Analytics", icon: <InsightsRoundedIcon />, value: "analytics", disabled: true },
+    { text: "Logs", icon: <ReceiptLongRoundedIcon />, value: "logs", disabled: true },
+    { text: "Maintenance", icon: <ConstructionRoundedIcon />, value: "maintenance", disabled: true }, // TODO: add backups and schedules
     { text: "Settings", icon: <SettingsRoundedIcon />, value: "settings" }, // TODO: add integrations like zapier, webhooks, ifttt, or api, and also network settings to be added like how the network mesh is
     // { text: "Report bug", icon: <PestControlIcon />, value: "report-bug" },
     // { text: "Give feedback", icon: <HelpRoundedIcon />, value: "give-feedback" },
@@ -85,7 +86,7 @@ export const MenuContent = React.memo(() => {
 
 interface SubMenuProps {
     title?: string;
-    items: { text: string; icon: JSX.Element; value: string }[];
+    items: { text: string; icon: JSX.Element; value: string; disabled?: boolean }[];
 }
 
 const SubMenu: React.FC<SubMenuProps> = React.memo(props => {
@@ -110,6 +111,7 @@ const SubMenu: React.FC<SubMenuProps> = React.memo(props => {
                             selected={currentPath === item.value}
                             component={RouterLink}
                             to={`/${item.value}`}
+                            disabled={item.disabled}
                         >
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={item.text} />

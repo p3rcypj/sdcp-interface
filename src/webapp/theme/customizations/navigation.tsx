@@ -60,6 +60,20 @@ export const navigationCustomizations: Components<Theme> = {
             }),
         },
     },
+    MuiListItemButton: {
+        styleOverrides: {
+            root: ({ theme }) => ({
+                variants: [
+                    {
+                        props: { disabled: true },
+                        style: {
+                            color: theme.palette.action.disabled,
+                        },
+                    },
+                ],
+            }),
+        },
+    },
     MuiSelect: {
         defaultProps: {
             IconComponent: React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
