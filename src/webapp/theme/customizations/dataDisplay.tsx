@@ -21,8 +21,7 @@ export const dataDisplayCustomizations: Components<Theme> = {
         styleOverrides: {
             root: ({ theme }) => ({
                 [`& .${svgIconClasses.root}`]: {
-                    width: "1rem",
-                    height: "1rem",
+                    fontSize: "1.25rem",
                     color: (theme.vars || theme).palette.text.secondary,
                 },
                 [`& .${typographyClasses.root}`]: {

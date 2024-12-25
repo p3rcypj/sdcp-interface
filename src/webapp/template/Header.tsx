@@ -1,12 +1,10 @@
-import * as React from "react";
-import Stack from "@mui/material/Stack";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
-import CustomDatePicker from "./CustomDatePicker";
 import NavbarBreadcrumbs from "./NavbarBreadcrumbs";
 import MenuButton from "./MenuButton";
-import ColorModeIconDropdown from ".././theme/ColorModeIconDropdown";
-
-import Search from "./Search";
+import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
+import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
+import { Stack } from "../components/stack/Stack";
+import OptionsMenu from "./OptionsMenu";
 
 export default function Header() {
     return (
@@ -23,13 +21,17 @@ export default function Header() {
             spacing={2}
         >
             <NavbarBreadcrumbs />
-            <Stack direction="row" sx={{ gap: 1 }}>
-                <Search />
-                <CustomDatePicker />
+            <Stack direction="row" gap={1} alignItems="center">
+                <MenuButton aria-label="Open notifications">
+                    <SchoolRoundedIcon />
+                </MenuButton>
+                <MenuButton aria-label="Open notifications">
+                    <HistoryRoundedIcon fontSize="large" />
+                </MenuButton>
                 <MenuButton showBadge aria-label="Open notifications">
                     <NotificationsRoundedIcon />
                 </MenuButton>
-                <ColorModeIconDropdown />
+                <OptionsMenu />
             </Stack>
         </Stack>
     );

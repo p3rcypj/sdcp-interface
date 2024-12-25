@@ -15,7 +15,7 @@ import { treeViewCustomizations } from "./customizations/treeView";
 
 declare module "@mui/material/styles" {
     interface Theme {
-        vars?: Partial<SystemTheme>;
+        vars?: SystemTheme;
     }
 }
 

@@ -14,7 +14,7 @@ export const navigationCustomizations: Components<Theme> = {
         styleOverrides: {
             root: ({ theme }) => ({
                 borderRadius: 4,
-                padding: "6px 8px",
+                padding: "6px 8px 6px 12px",
                 minHeight: 24,
                 [`&.${menuItemClasses.focusVisible}`]: {
                     backgroundColor: "transparent",
@@ -31,19 +31,17 @@ export const navigationCustomizations: Components<Theme> = {
         styleOverrides: {
             list: {
                 gap: "0px",
-                [`&.${dividerClasses.root}`]: {
-                    margin: "0 -8px",
-                },
                 [`&&`]: {
-                    padding: 8,
+                    padding: "4px 6px",
                 },
             },
             paper: ({ theme }) => ({
-                marginTop: "4px",
+                marginTop: "8px",
                 borderRadius: (theme.vars || theme).shape.borderRadius,
                 border: `1px solid ${(theme.vars || theme).palette.divider}`,
                 backgroundImage: "none",
                 background: "hsl(0, 0%, 100%)",
+                minWidth: "200px",
                 boxShadow:
                     "hsla(220, 30%, 5%, 0.07) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.07) 0px 8px 16px -5px",
                 [`& .${buttonBaseClasses.root}`]: {
@@ -56,6 +54,9 @@ export const navigationCustomizations: Components<Theme> = {
                     boxShadow:
                         "hsla(220, 30%, 5%, 0.7) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.8) 0px 8px 16px -5px",
                 }),
+                [`& .${dividerClasses.root}`]: {
+                    margin: "4px -8px",
+                },
             }),
         },
     },

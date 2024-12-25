@@ -1,4 +1,3 @@
-import * as React from "react";
 import { alpha, Theme, Components } from "@mui/material/styles";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { svgIconClasses } from "@mui/material/SvgIcon";
@@ -259,7 +258,7 @@ export const inputsCustomizations: Components<Theme> = {
                             width: "2.25rem",
                             height: "2.25rem",
                             padding: "0.25rem",
-                            [`& .${svgIconClasses.root}`]: { fontSize: "1rem" },
+                            [`& .${svgIconClasses.root}`]: { fontSize: "1.25rem" },
                         },
                     },
                     {
@@ -269,6 +268,23 @@ export const inputsCustomizations: Components<Theme> = {
                         style: {
                             width: "2.5rem",
                             height: "2.5rem",
+                        },
+                    },
+                    {
+                        props: {
+                            className: "text-button",
+                        },
+                        style: {
+                            border: "none",
+                            "&": {
+                                backgroundColor: "transparent",
+                            },
+                            "&:hover": {
+                                backgroundColor: "transparent",
+                            },
+                            "&:active": {
+                                backgroundColor: "transparent",
+                            },
                         },
                     },
                 ],
