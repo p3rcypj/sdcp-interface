@@ -1,16 +1,14 @@
 import React from "react";
 import { Box, alpha, Stack, useTheme } from "@mui/material";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Header from "../template/Header";
 import MainGrid from "../template/MainGrid";
 
 const AppRouter: React.FC = () => {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/dashboard" element={<TemplateDashboard />} />
-            </Routes>
-        </BrowserRouter>
+        <Routes>
+            <Route path="/dashboard" element={<TemplateDashboard />} />
+        </Routes>
     );
 };
 

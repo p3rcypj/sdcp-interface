@@ -5,9 +5,6 @@ import Drawer, { drawerClasses } from "@mui/material/Drawer";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
-
-import MenuButton from "./MenuButton";
 import { MenuContent } from "./MenuContent";
 
 interface SideMenuMobileProps {
@@ -36,25 +33,20 @@ export default function SideMenuMobile({ open, toggleDrawer }: SideMenuMobilePro
                     height: "100%",
                 }}
             >
-                <Stack direction="row" sx={{ p: 2, gap: 1 }}>
-                    <Stack direction="row" sx={{ gap: 1, alignItems: "center", flexGrow: 1 }}>
-                        <Avatar
-                            sizes="small"
-                            alt="Riley Carter"
-                            src="/static/images/avatar/7.jpg"
-                            sx={{ width: 24, height: 24 }}
-                        />
-                        <Typography component="p" variant="h6">
-                            Riley Carter
-                        </Typography>
-                    </Stack>
-                    <MenuButton showBadge>
-                        <NotificationsRoundedIcon />
-                    </MenuButton>
+                <Stack direction="row" sx={{ gap: 1, alignItems: "center", flexGrow: 1, px: 2, py: 1 }}>
+                    <Avatar
+                        sizes="small"
+                        alt="Riley Carter"
+                        src="/static/images/avatar/7.jpg"
+                        sx={{ width: 24, height: 24 }}
+                    />
+                    <Typography component="p" variant="h6">
+                        Riley Carter
+                    </Typography>
                 </Stack>
                 <Divider />
                 <Stack sx={{ flexGrow: 1 }}>
-                    <MenuContent selected="home" />
+                    <MenuContent />
                     <Divider />
                 </Stack>
                 <Stack sx={{ p: 2 }}>

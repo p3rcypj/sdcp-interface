@@ -38,7 +38,7 @@ export default function SideMenu() {
                 </Box>
             </Box>
             <Divider />
-            <MenuContent selected="home" />
+            <MenuContent />
         </Drawer>
     );
 }

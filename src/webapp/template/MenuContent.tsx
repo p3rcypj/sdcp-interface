@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography, useTheme, SvgIcon } from "@mui/material";
+import { Box, Typography, useTheme, SvgIcon, useMediaQuery } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -19,8 +19,12 @@ import CollectionsBookmarkRoundedIcon from "@mui/icons-material/CollectionsBookm
 import QueueRoundedIcon from "@mui/icons-material/QueueRounded";
 import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
 import CategoryRoundedIcon from "@mui/icons-material/CategoryRounded";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
 import { Stack } from "../components/stack/Stack";
+import { Link as RouterLink } from "react-router-dom";
 import { Raspberry } from "../components/icons/Raspberry";
+import { useLocation } from "react-router-dom";
 
 const navigationItems = [
     { text: "Home", icon: <HomeRoundedIcon />, value: "home" },
@@ -59,19 +63,22 @@ const adminItems = [
     // { text: "Give feedback", icon: <HelpRoundedIcon />, value: "give-feedback" },
 ];
 
-interface MenuContentProps {
-    selected: string;
-}
+const userItems = [
+    { text: "Profile", icon: <PersonRoundedIcon />, value: "profile" },
+    { text: "Preferences", icon: <TuneRoundedIcon />, value: "preferences" },
+];
 
-export const MenuContent: React.FC<MenuContentProps> = React.memo(props => {
-    const { selected } = props;
+export const MenuContent = React.memo(() => {
+    const theme = useTheme();
+    const mobile = useMediaQuery(theme.breakpoints.down("md"));
 
     return (
         <Stack marginTop={1} padding={1} gap={1} flexGrow={1}>
-            <SubMenu items={navigationItems} title="Views" selected={selected} />
-            <SubMenu items={manageItems} title="Manage" selected={selected} />
-            <SubMenu items={storageItems} title="Storage" selected={selected} />
-            <SubMenu items={adminItems} title="Administration" selected={selected} />
+            <SubMenu items={navigationItems} title="Views" />
+            <SubMenu items={manageItems} title="Manage" />
+            <SubMenu items={storageItems} title="Storage" />
+            <SubMenu items={adminItems} title="Administration" />
+            {mobile && <SubMenu items={userItems} title="User" />}
         </Stack>
     );
 });
@@ -79,13 +86,14 @@ export const MenuContent: React.FC<MenuContentProps> = React.memo(props => {
 interface SubMenuProps {
     title?: string;
     items: { text: string; icon: JSX.Element; value: string }[];
-    selected: string;
 }
 
 const SubMenu: React.FC<SubMenuProps> = React.memo(props => {
-    const { items, title, selected } = props;
+    const { items, title } = props;
 
     const theme = useTheme();
+    const location = useLocation();
+    const currentPath = location.pathname.slice(1);
 
     return (
         <Box>
@@ -98,7 +106,11 @@ const SubMenu: React.FC<SubMenuProps> = React.memo(props => {
             <List dense>
                 {items.map((item, index) => (
                     <ListItem key={index} disablePadding sx={{ display: "block" }}>
-                        <ListItemButton selected={selected === item.value}>
+                        <ListItemButton
+                            selected={currentPath === item.value}
+                            component={RouterLink}
+                            to={`/${item.value}`}
+                        >
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={item.text} />
                         </ListItemButton>

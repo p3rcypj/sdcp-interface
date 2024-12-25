@@ -7,7 +7,8 @@ import Typography from "@mui/material/Typography";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import SideMenuMobile from "./SideMenuMobile";
 import MenuButton from "./MenuButton";
-import ColorModeIconDropdown from ".././theme/ColorModeIconDropdown";
+import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
+import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
 import { AppIcon } from "./SideMenu";
 import { Stack } from "@mui/material";
 
@@ -55,7 +56,12 @@ export default function AppNavbar() {
                             SDCP Interface
                         </Typography>
                     </Stack>
-                    <ColorModeIconDropdown />
+                    <MenuButton aria-label="Open notifications">
+                        <HistoryRoundedIcon fontSize="large" />
+                    </MenuButton>
+                    <MenuButton showBadge aria-label="Open notifications">
+                        <NotificationsRoundedIcon />
+                    </MenuButton>
                     <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>
                         <MenuRoundedIcon />
                     </MenuButton>
