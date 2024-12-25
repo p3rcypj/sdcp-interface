@@ -1,14 +1,14 @@
-import React from "react";
 import { Box } from "@mui/material";
+import { BrowserRouter } from "react-router-dom";
+
 import { AppContext, AppContextState } from "./context";
 import { useConnections } from "../hooks/useConnections";
 import { getCompositionRoot } from "../../CompositionRoot";
-import { BrowserRouter } from "react-router-dom";
-import SideMenu from "../template/SideMenu";
-import AppNavbar from "../template/AppNavbar";
-import AppRouter from "../pages/Router";
+import { SideMenuDesktop } from "../components/layout/SideMenuDesktop";
+import { AppNavbarMobile } from "../components/layout/AppNavbarMobile";
+import { AppRouter as MainContent } from "../pages/Router";
 
-export const App = React.memo(() => {
+export const App = () => {
     const connections = useConnections();
 
     const appContext: AppContextState = {
@@ -18,13 +18,13 @@ export const App = React.memo(() => {
 
     return (
         <AppContext.Provider value={appContext}>
-            <Box display="flex">
-                <BrowserRouter>
-                    <SideMenu />
-                    <AppNavbar />
-                    <AppRouter />
-                </BrowserRouter>
-            </Box>
+            <BrowserRouter>
+                <Box display="flex">
+                    <SideMenuDesktop />
+                    <AppNavbarMobile />
+                    <MainContent />
+                </Box>
+            </BrowserRouter>
         </AppContext.Provider>
     );
-});
+};

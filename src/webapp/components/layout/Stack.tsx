@@ -3,7 +3,7 @@ import { Box, StackProps, BoxProps } from "@mui/material";
 
 const areEqual = (prevProps: StackProps & BoxProps, nextProps: StackProps & BoxProps) => {
     const isEqual = prevProps.children === nextProps.children;
-    if (!isEqual) console.debug("Stack: re-render");
+    if (!isEqual && process.env.NODE_ENV === "development") console.debug("Stack: re-render");
 
     return isEqual;
 };

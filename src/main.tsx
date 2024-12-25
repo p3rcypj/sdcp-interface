@@ -3,6 +3,13 @@ import ReactDOM from "react-dom/client";
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
 import { App } from "./webapp/app/App.tsx";
 import AppTheme from "./webapp/theme/AppTheme.tsx";
+import whyDidYouRender from "@welldone-software/why-did-you-render";
+
+if (process.env.NODE_ENV === "development") {
+    whyDidYouRender(React, {
+        trackAllPureComponents: false,
+    });
+}
 
 // MUI v6 Dashboard Template
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -11,6 +11,8 @@ interface UseBooleanActions {
     disable: Callback;
     show: Callback;
     hide: Callback;
+    open: Callback;
+    close: Callback;
 }
 
 export function useBooleanState(initialValue: boolean): UseBooleanReturn {
@@ -23,6 +25,8 @@ export function useBooleanState(initialValue: boolean): UseBooleanReturn {
             disable: () => setValue(false),
             show: () => setValue(true),
             hide: () => setValue(false),
+            open: () => setValue(true),
+            close: () => setValue(false),
             toggle: () => setValue(value_ => !value_),
         };
     }, [setValue]);
