@@ -55,7 +55,7 @@ export const navigationCustomizations: Components<Theme> = {
                         "hsla(220, 30%, 5%, 0.7) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.8) 0px 8px 16px -5px",
                 }),
                 [`& .${dividerClasses.root}`]: {
-                    margin: "4px -8px",
+                    margin: "2px -8px",
                 },
             }),
         },

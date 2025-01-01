@@ -7,6 +7,7 @@ import { getCompositionRoot } from "../../CompositionRoot";
 import { SideMenuDesktop } from "../components/layout/SideMenuDesktop";
 import { AppNavbarMobile } from "../components/layout/AppNavbarMobile";
 import { AppRouter as MainContent } from "../pages/Router";
+import { SnackbarProvider } from "../components/snackbar/snackbar";
 
 export const App = () => {
     const connections = useConnections();
@@ -18,13 +19,15 @@ export const App = () => {
 
     return (
         <AppContext.Provider value={appContext}>
-            <BrowserRouter>
-                <Box display="flex">
-                    <SideMenuDesktop />
-                    <AppNavbarMobile />
-                    <MainContent />
-                </Box>
-            </BrowserRouter>
+            <SnackbarProvider>
+                <BrowserRouter>
+                    <Box display="flex">
+                        <SideMenuDesktop />
+                        <AppNavbarMobile />
+                        <MainContent />
+                    </Box>
+                </BrowserRouter>
+            </SnackbarProvider>
         </AppContext.Provider>
     );
 };

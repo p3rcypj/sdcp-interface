@@ -10,6 +10,7 @@ import { NavbarBreadcrumbs } from "./NavbarBreadcrumbs";
 import { MenuButton } from "./MenuButton";
 import { Stack } from "./Stack";
 import { UserMenuDesktop } from "./UserMenuDesktop";
+import Tooltip from "../TooltipEventWrapper";
 
 interface HeaderProps {
     hideBreadcrumbs?: boolean;
@@ -20,9 +21,11 @@ export const HeaderDesktop: React.FC<HeaderProps> = ({ hideBreadcrumbs }) => (
         {hideBreadcrumbs ? <Box></Box> : <NavbarBreadcrumbs />}
 
         <Stack direction="row" gap={1} alignItems="center">
-            <MenuButton title="Open guide">
-                <SchoolRoundedIcon />
-            </MenuButton>
+            <Tooltip title="Open guide">
+                <MenuButton>
+                    <SchoolRoundedIcon />
+                </MenuButton>
+            </Tooltip>
 
             <CommonButtons />
 
@@ -33,13 +36,17 @@ export const HeaderDesktop: React.FC<HeaderProps> = ({ hideBreadcrumbs }) => (
 
 export const CommonButtons = () => (
     <>
-        <MenuButton title="Open history registry">
-            <HistoryRoundedIcon fontSize="large" />
-        </MenuButton>
+        <Tooltip title="Show history registry">
+            <MenuButton>
+                <HistoryRoundedIcon fontSize="large" />
+            </MenuButton>
+        </Tooltip>
 
-        <MenuButton showBadge title="Open notifications">
-            <NotificationsRoundedIcon />
-        </MenuButton>
+        <Tooltip title="See notifications">
+            <MenuButton showBadge>
+                <NotificationsRoundedIcon />
+            </MenuButton>
+        </Tooltip>
     </>
 );
 
@@ -48,6 +55,5 @@ const headerSx: SxProps = {
     width: "100%",
     alignItems: { xs: "flex-start", md: "center" },
     justifyContent: "space-between",
-    maxWidth: { sm: "100%", md: "1700px" },
     pt: 1.5,
 };

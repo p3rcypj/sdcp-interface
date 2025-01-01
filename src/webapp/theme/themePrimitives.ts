@@ -1,4 +1,4 @@
-import { createTheme, alpha, PaletteMode, Shadows } from "@mui/material/styles";
+import { createTheme, alpha, PaletteMode, Shadows, Components, Theme } from "@mui/material/styles";
 
 declare module "@mui/material/Paper" {
     interface PaperPropsVariantOverrides {
@@ -345,6 +345,16 @@ declare module "@mui/material/Typography" {
         overline2: true;
     }
 }
+
+export const typographyCustomizations: Components<Theme> = {
+    MuiTypography: {
+        styleOverrides: {
+            root: ({ theme }) => ({
+                variants: [{ props: { gutterBottom: true }, style: { marginBottom: theme.spacing(2) } }],
+            }),
+        },
+    },
+};
 
 export const typography = {
     fontFamily: "Inter, sans-serif",

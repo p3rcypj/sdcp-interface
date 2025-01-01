@@ -12,6 +12,8 @@ import { chartsCustomizations } from "./customizations/charts";
 import { dataGridCustomizations } from "./customizations/dataGrid";
 import { datePickersCustomizations } from "./customizations/datePickers";
 import { treeViewCustomizations } from "./customizations/treeView";
+import { iconsCustomizations } from "./customizations/icons";
+import { typographyCustomizations } from "./themePrimitives";
 
 declare module "@mui/material/styles" {
     interface Theme {
@@ -54,6 +56,8 @@ export default function AppTheme(props: AppThemeProps) {
                       ...dataGridCustomizations,
                       ...datePickersCustomizations,
                       ...treeViewCustomizations,
+                      ...iconsCustomizations,
+                      ...typographyCustomizations,
                   },
               });
     }, [disableCustomTheme, themeComponents]);

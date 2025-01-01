@@ -8,7 +8,7 @@ export const AppIcon = () => {
 };
 
 const Icon = styled("span")((props: { filter: string }) => ({
-    backgroundImage: "url(icon_256.png)",
+    backgroundImage: "url(/icon_256.png)",
     height: 24,
     width: 24,
     filter: props.filter,
